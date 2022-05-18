@@ -55,9 +55,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
     resultsViewModel = Provider.of<ResultsViewModel>(context, listen: false);
     suggestionsViewModel =
         Provider.of<SuggestionsViewModel>(context, listen: false);
-    searchController.text = resultsViewModel.word;
+    searchController.text = resultsViewModel.query;
     Future.microtask(() async {
-      resultsViewModel.searchWord(searchController.text, true);
+      resultsViewModel.searchQuery(searchController.text, true);
       try {
         if (!isSpeechAvailable) {
           isSpeechAvailable = await speech.initialize(
@@ -112,7 +112,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               onPressed: () {})),
                       InkWell(
                         onTap: () {
-                          resultsViewModel.word = '';
+                          resultsViewModel.query = '';
                           Navigator.pushReplacementNamed(
                               context, HomeScreen.routeName);
                         },
@@ -230,7 +230,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 },
                                 onSuggestionSelected: (suggestion) async {
                                   searchController.text = suggestion;
-                                  resultsViewModel.word = searchController.text;
+                                  resultsViewModel.query =
+                                      searchController.text;
                                   FocusScope.of(context).unfocus();
                                   // _pagingController.refresh();
                                 },
@@ -248,7 +249,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                     color: ConstantColors.borders),
                                 onPressed: () async {
                                   if (searchController.text.isNotEmpty) {
-                                    resultsViewModel.word =
+                                    resultsViewModel.query =
                                         searchController.text;
                                     FocusScope.of(context).unfocus();
                                     Navigator.pushReplacementNamed(
@@ -304,7 +305,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             ),
                           ),
                           onPressed: () {
-                            resultsViewModel.word = '';
+                            resultsViewModel.query = '';
                             Navigator.pushReplacementNamed(
                                 context, HomeScreen.routeName);
                           },
@@ -351,16 +352,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 1350, 25),
-                  child: resultsViewModel.websites.isNotEmpty
+                  child: resultsViewModel.webpages.isNotEmpty
                       ? Text(
-                          "About ${resultsViewModel.websites.length} results",
+                          "About ${resultsViewModel.webpages.length} results",
                           style: TextStyle(
                               color: ConstantColors.foreground.withOpacity(0.7),
                               fontSize: 14),
                         )
                       : null,
                 ),
-                resultsViewModel.websites.isNotEmpty
+                resultsViewModel.webpages.isNotEmpty
                     ? Row(children: [
                         Container(
                           margin: EdgeInsets.fromLTRB(235, 0, 0, 25),
@@ -375,7 +376,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         Container(
                           margin: EdgeInsets.fromLTRB(0, 0, 0, 26),
                           child: Text(
-                            resultsViewModel.word,
+                            resultsViewModel.query,
                             style: TextStyle(
                                 color: ConstantColors.foreground,
                                 fontSize: 16,
@@ -391,23 +392,23 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         if (notification.metrics.pixels ==
                                 notification.metrics.maxScrollExtent &&
                             resultsViewModel.status != Status.loading) {
-                          resultsViewModel.searchWord(
+                          resultsViewModel.searchQuery(
                               searchController.text, false);
                           return true;
                         } else {
                           return false;
                         }
                       },
-                      child: resultsViewModel.websites.isNotEmpty
+                      child: resultsViewModel.webpages.isNotEmpty
                           ? Scrollbar(
                               controller: scrollController,
                               child: ListView.builder(
                                   controller: scrollController,
                                   padding: EdgeInsets.zero,
-                                  itemCount: resultsViewModel.websites.length,
+                                  itemCount: resultsViewModel.webpages.length,
                                   itemBuilder: (_, index) {
                                     return ResultWidget(
-                                      url: resultsViewModel.websites[index].url,
+                                      url: resultsViewModel.webpages[index].url,
                                       word: searchController.text,
                                     );
                                   }))

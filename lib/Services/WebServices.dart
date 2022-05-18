@@ -2,17 +2,14 @@ import 'dart:convert';
 import '../Constants/Endpoints.dart';
 import 'package:http/http.dart' as http;
 
-int req = 1;
-
 class WebServices {
-  Future<List<dynamic>> searchWord(
-      String word, int pageNum, int pageSize) async {
+  Future<List<dynamic>> searchQuery(
+      String query, int pageNum, int pageSize) async {
     try {
       print(pageNum);
-      req++;
       final response = await http.get(
         Uri.parse(EndPoints.baseUrl +
-            word +
+            query +
             "?pageSize=" +
             pageSize.toString() +
             "&pageNum=" +
@@ -25,10 +22,10 @@ class WebServices {
     }
   }
 
-  Future<List> getSuggestions(String word) async {
+  Future<List> getSuggestions(String query) async {
     try {
       final response = await http.get(
-        Uri.parse(EndPoints.baseUrl + '/getSuggestions/' + word),
+        Uri.parse(EndPoints.baseUrl + '/getSuggestions/' + query),
       );
       print(response.body);
 

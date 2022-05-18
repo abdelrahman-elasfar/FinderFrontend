@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         onSuggestionSelected: (suggestion) async {
                           searchController.text = suggestion;
-                          resultsViewModel.word = searchController.text;
+                          resultsViewModel.query = searchController.text;
                           Navigator.pushReplacementNamed(
                               context, ResultsScreen.routeName);
                         },
@@ -329,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: ConstantColors.buttons)))),
                       onPressed: () async {
                         if (searchController.text.isNotEmpty) {
-                          resultsViewModel.word = searchController.text;
+                          resultsViewModel.query = searchController.text;
                           Navigator.pushReplacementNamed(
                               context, ResultsScreen.routeName);
                         }
