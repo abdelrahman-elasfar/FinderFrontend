@@ -7,15 +7,15 @@ class SuggestionsViewModel with ChangeNotifier {
   Status status = Status.success;
   List<String> suggestions = [];
 
-  Future<bool> getSuggesitons(String word) async {
+  Future<bool> getSuggesitons(String query) async {
     try {
-      final List results = await WebServices().getSuggestions(word);
+      final List results = await WebServices().getSuggestions(query);
       List<String> newSuggestions = [];
       for (int i = 0; i < results.length; i++) {
-        String suggestion = results[i]['word'];
+        String suggestion = results[i]['query'];
         newSuggestions.add(suggestion);
       }
-      if (word != '') {
+      if (query != '') {
         suggestions = newSuggestions;
       } else {
         suggestions = [];
