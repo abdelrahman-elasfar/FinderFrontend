@@ -10,9 +10,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class ResultWidget extends StatefulWidget {
   final String url;
-  final String word;
+  final String query;
 
-  const ResultWidget({Key key, this.url, this.word}) : super(key: key);
+  const ResultWidget({Key key, this.url, this.query}) : super(key: key);
 
   @override
   _ResultWidgetState createState() => _ResultWidgetState();
@@ -35,14 +35,65 @@ class _ResultWidgetState extends State<ResultWidget>
       http.Response response = await http.get(Uri.parse(widget.url));
 
       Document document = parse(response.body);
+      // declare array of strings
+      List<String> words = widget.query.split(' ');
+      for (int i = 0; i < words.length; i++) {
+        document.querySelectorAll('p').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
 
-      document.querySelectorAll('p').forEach((value) {
-        if (!found &&
-            value.innerHtml.toLowerCase().contains(widget.word.toLowerCase())) {
-          body = value.text;
-          found = true;
-        }
-      });
+        document.querySelectorAll('h1').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
+
+        document.querySelectorAll('h2').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
+
+        document.querySelectorAll('h3').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
+
+        document.querySelectorAll('h4').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
+
+        document.querySelectorAll('h5').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
+
+        document.querySelectorAll('h6').forEach((value) {
+          if (!found &&
+              value.innerHtml.toLowerCase().contains(words[i].toLowerCase())) {
+            body = value.text;
+            found = true;
+          }
+        });
+      }
 
       if (!found) {
         body = metadata.description;

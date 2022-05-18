@@ -409,7 +409,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                   itemBuilder: (_, index) {
                                     return ResultWidget(
                                       url: resultsViewModel.webpages[index].url,
-                                      word: searchController.text,
+                                      query: searchController.text,
                                     );
                                   }))
                           : resultsViewModel.status != Status.loading
