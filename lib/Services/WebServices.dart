@@ -25,7 +25,7 @@ class WebServices {
   Future<List> getSuggestions(String query) async {
     try {
       final response = await http.get(
-        Uri.parse(EndPoints.baseUrl + '/getSuggestions/' + query),
+        Uri.parse(EndPoints.baseUrl + 'getSuggestions/' + query),
       );
       print(response.body);
 
